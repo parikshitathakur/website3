@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shoolini AI Block • Class Schedule</title>
+
+      <link rel="stylesheet" href="style.css" />
+  </head>
+</head>
+
+<body>
+  <header class="hero">
+    <nav class="topbar">
+      <div class="brand">
+        <div class="logo">✦</div>
+        <div>SHOOLINI UNIVERSITY</div>
+      </div>
+      <div class="location">Solan · Himachal Pradesh</div>
+    </nav>
+
+    <div class="hero-content">
+      <div class="eyebrow">AI Block · Academic Planner</div>
+      <h1>Learn above the clouds.</h1>
+      <p class="subtitle">
+        A calm, mountain-inspired class schedule for AI Block students —
+        designed with the feeling of Shimla mornings, pine forests and misty hills.
+      </p>
+    </div>
+
+    <div class="mountains"></div>
+    <div class="pine-row"></div>
+  </header>
+
+  <main class="container">
+    <section class="panel controls">
+      <button class="day-btn active" data-day="Monday">Monday</button>
+      <button class="day-btn" data-day="Tuesday">Tuesday</button>
+      <button class="day-btn" data-day="Wednesday">Wednesday</button>
+      <button class="day-btn" data-day="Thursday">Thursday</button>
+      <button class="day-btn" data-day="Friday">Friday</button>
+      <span class="week-label">AI Block · Weekly Schedule</span>
+    </section>
+
+    <section class="panel schedule">
+      <div class="schedule-head">
+        <div>
+          <h2 id="dayTitle">Monday</h2>
+          <p id="daySubtitle">Your classes for today</p>
+        </div>
+        <div class="badge">● Academic Week</div>
+      </div>
+
+      <div id="classList" class="class-list"></div>
+      <div id="empty" class="empty">No classes scheduled for this day.</div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div><strong>Shoolini AI Block</strong> · Class Schedule</div>
+    <div>Made with a little Himachali mountain calm ♡</div>
+  </footer>
+
+  <script>
+    /*
+      EDIT YOUR TIMETABLE HERE.
+      Change the subject, time, teacher, room and type as needed.
+    */
+    const schedule = {
+      Monday: [
+        { time: "09:00 – 10:00", subject: "Python Programming", teacher: "Dr. Faculty Name", room: "AI Lab 01", type: "Lecture" },
+        { time: "10:15 – 11:15", subject: "Artificial Intelligence", teacher: "Dr. Faculty Name", room: "AI Block 204", type: "Lecture" },
+        { time: "11:30 – 12:30", subject: "Generative AI", teacher: "Faculty Name", room: "AI Lab 02", type: "Practical" },
+        { time: "14:00 – 15:00", subject: "Communication Skills", teacher: "Faculty Name", room: "Room 108", type: "Workshop" }
+      ],
+
+      Tuesday: [
+        { time: "09:00 – 10:00", subject: "Data Structures", teacher: "Faculty Name", room: "AI Block 201", type: "Lecture" },
+        { time: "10:15 – 11:15", subject: "Python Programming", teacher: "Faculty Name", room: "AI Lab 01", type: "Practical" },
+        { time: "12:00 – 13:00", subject: "Mathematics for AI", teacher: "Faculty Name", room: "Room 106", type: "Lecture" }
+      ],
+
+      Wednesday: [
+        { time: "09:30 – 10:30", subject: "Machine Learning", teacher: "Faculty Name", room: "AI Block 203", type: "Lecture" },
+        { time: "10:45 – 11:45", subject: "Machine Learning Lab", teacher: "Faculty Name", room: "AI Lab 02", type: "Practical" },
+        { time: "14:00 – 15:00", subject: "Design & Creativity", teacher: "Faculty Name", room: "Innovation Studio", type: "Studio" }
+      ],
+
+      Thursday: [
+        { time: "09:00 – 10:00", subject: "Data Science", teacher: "Faculty Name", room: "AI Block 202", type: "Lecture" },
+        { time: "10:15 – 11:15", subject: "Generative AI", teacher: "Faculty Name", room: "AI Lab 02", type: "Practical" },
+        { time: "12:00 – 13:00", subject: "Professional Development", teacher: "Faculty Name", room: "Seminar Hall", type: "Workshop" }
+      ],
+
+      Friday: [
+        { time: "09:00 – 10:00", subject: "AI Ethics & Society", teacher: "Faculty Name", room: "AI Block 205", type: "Lecture" },
+        { time: "10:15 – 11:15", subject: "Project Lab", teacher: "Mentor Name", room: "AI Innovation Lab", type: "Project" },
+        { time: "11:30 – 12:30", subject: "Project Lab", teacher: "Mentor Name", room: "AI Innovation Lab", type: "Project" }
+      ]
+    };
+
+    const classList = document.getElementById("classList");
+    const empty = document.getElementById("empty");
+    const dayTitle = document.getElementById("dayTitle");
+    const daySubtitle = document.getElementById("daySubtitle");
+    const buttons = document.querySelectorAll(".day-btn");
+
+    function renderDay(day) {
+      const classes = schedule[day] || [];
+      dayTitle.textContent = day;
+      daySubtitle.textContent = `${classes.length} class${classes.length === 1 ? "" : "es"} scheduled for today`;
+
+      classList.innerHTML = "";
+
+      if (classes.length === 0) {
+        empty.style.display = "block";
+        return;
+      }
+
+      empty.style.display = "none";
+
+      classes.forEach(item => {
+        const card = document.createElement("article");
+        card.className = "class-card";
+
+        card.innerHTML = `
+          <div class="time">${item.time}</div>
+          <div>
+            <div class="subject">${item.subject}</div>
+            <div class="meta">
+              <span>♧ ${item.teacher}</span>
+              <span>⌂ ${item.room}</span>
+            </div>
+          </div>
+          <div class="type">${item.type}</div>
+        `;
+
+        classList.appendChild(card);
+      });
+    }
+
+    buttons.forEach(button => {
+      button.addEventListener("click", () => {
+        buttons.forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        renderDay(button.dataset.day);
+      });
+    });
+
+    renderDay("Monday");
+  </script>
+</body>
+</html>
